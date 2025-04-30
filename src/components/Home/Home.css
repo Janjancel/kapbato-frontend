@@ -1,0 +1,13 @@
+#homepage {
+    overflow-x: hidden;
+}
+
+#home-sec1,
+#home-sec2 {
+    height: 80vh;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+

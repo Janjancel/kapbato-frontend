@@ -1,0 +1,51 @@
+/* Global styles */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+section {
+  width: 100vw;
+}
+
+main {
+  width: 100%;
+  min-height: 100vh;
+  height: auto;
+}
+
+/* Default padding for all pages */
+body {
+  padding-top: 10vh;
+}
+
+/* Ensure body padding is removed for admin */
+.admin body {
+  padding-top: 0 !important;
+}
+
+#Admin {
+  margin-top: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+
+/* .content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 80px; 
+} */
+
+.about-page {
+  overflow-x: hidden;
+}

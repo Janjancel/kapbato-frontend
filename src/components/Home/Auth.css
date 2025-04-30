@@ -1,0 +1,186 @@
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #d9d9d9;
+  overflow: hidden;
+  
+}
+
+.auth-wrapper {
+  display: flex;
+  width: 700px;
+  height: 500px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Center the wrapper when login is active */
+.slide-left {
+  transform: translateX(0%);
+}
+
+.slide-right {
+  transform: translateX(0%);
+}
+
+/* Sections */
+.auth-section {
+  width: 50%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* Background colors */
+.left-section,
+.right-section{
+  /* background-color: #FAF9F6; */
+  /* background-color: #EDEDE9; */
+  background-color: #D9D9D9;
+}
+
+
+
+/* Form Visibility */
+.form-wrapper {
+  width: 100%;
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.form-wrapper.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Input Fields */
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.auth-btn:hover {
+  background-color: #0056b3;
+}
+
+.toggle-link {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.toggle-link:hover {
+  color: #0056b3;
+}
+
+/* Password Field */
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+.password-input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.show-password-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+  color: #555;
+}
+
+.show-password-btn:hover {
+  color: #000;
+}
+
+/* Background Image Container */
+.text-container {
+  width: 100%;
+  height: 100%;
+
+  background-size: cover;  /* Ensures the image covers the entire div */
+  background-position: center;  /* Centers the image */
+  background-repeat: no-repeat;  /* Prevents image tiling */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 0; /* ✅ Ensure no padding */
+  margin: 0;  /* ✅ Remove any extra margins */
+  position: absolute; /* ✅ Ensure it fully occupies the section */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#login {
+  background-image: url('../images/login.avif');
+  padding: 0; 
+  margin: 0;  
+}
+
+#register {
+  background-image: url('../images/register.avif');
+  padding: 0; 
+  margin: 0;  
+}
+
+/* Optional: Add an overlay for better text readability */
+.text-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+}
+
+.text-container p {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 20px;
+}
+
+.error {
+  color: red;
+  font-size: 10px;
+  /* margin-top: 5px; */
+}
