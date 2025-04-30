@@ -203,43 +203,38 @@ import './Navbar.css';
 import { Link, useMatch, useResolvedPath, useNavigate, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import logo from '../images/logo.png';
-import profilePic from '../images/profile.png'; // Default profile image
+import profilePic from '../images/profile.png';
 import { useState, useEffect, useRef } from 'react';
 import Swal from 'sweetalert2';
-import { FaShoppingCart } from 'react-icons/fa'; // Import cart icon
-import axios from 'axios'; // Import axios for API calls
+import { FaShoppingCart } from 'react-icons/fa';
+import axios from 'axios';
 
 export default function Navbar() {
     const navigate = useNavigate();
-    const location = useLocation(); // Get current route
+    const location = useLocation();
+    const isAuthenticated = !!localStorage.getItem('token');
 
-    const isAuthenticated = !!localStorage.getItem('token'); // Check if logged in
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [cartCount, setCartCount] = useState(0);
+    const [menuOpen, setMenuOpen] = useState(false); // 🍔 toggle
     const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
-    const [cartCount, setCartCount] = useState(0); // ✅ Store cart item count
     const dropdownRef = useRef(null);
-    const servicesRef = useRef(null);
 
-    // Hide Sign Up & Sign In buttons on /auth, /login, or /register
     const hideAuthButtons = ["/auth", "/login", "/register"].includes(location.pathname);
-
-    // Fetch user profile image from localStorage
     const userProfileImage = localStorage.getItem('profileImage') || profilePic;
 
-    // Fetch cart item count from backend
     const fetchCartCount = async () => {
         if (!isAuthenticated) return;
         try {
             const response = await axios.get("http://localhost:8000/api/cart/count/", {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
             });
-            setCartCount(response.data.total_items); // ✅ Update cart count
+            setCartCount(response.data.total_items);
         } catch (error) {
             console.error("Error fetching cart count:", error);
         }
     };
 
-    // Fetch cart count on component mount
     useEffect(() => {
         fetchCartCount();
     }, [isAuthenticated]);
@@ -257,12 +252,7 @@ export default function Navbar() {
                 localStorage.removeItem('token');
                 localStorage.removeItem('profileImage');
                 navigate('/');
-                Swal.fire({
-                    title: "Logged Out!",
-                    text: "You have been successfully logged out.",
-                    icon: "success",
-                    confirmButtonText: "OK"
-                });
+                Swal.fire("Logged Out!", "You have been successfully logged out.", "success");
             }
         });
     };
@@ -273,56 +263,72 @@ export default function Navbar() {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setDropdownOpen(false);
             }
-            if (servicesRef.current && !servicesRef.current.contains(event.target)) {
-                setServicesDropdownOpen(false);
-            }
         }
         document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
+        return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    // Hide Navbar on /admin pages
-    if (location.pathname.startsWith("/admin")) {
-        return null;
-    }
+    if (location.pathname.startsWith("/admin")) return null;
 
     return (
-        <nav className="nav navbar navbar-expand-lg fixed-top">
-            <div className="container container-fluid">
-                <a className="navbar-brand" href="/">
+        <nav className="navbar navbar-expand-lg fixed-top nav">
+            <div className="container-fluid">
+                <Link className="navbar-brand" to="/">
                     <img src={logo} alt="logo" id="logo" />
-                </a>
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                    <CustomLink to="/">Home</CustomLink>
-                    <li className="nav-item dropdown" ref={servicesRef}>
-                        <span className="nav-link dropdown-toggle" onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}>
-                            Services
-                        </span>
-                        {servicesDropdownOpen && (
-                            <ul className="dropdown-menu show">
-                                <li><Link className="nav-dropdown-item" to="/buy">Buy</Link></li>
-                                <li><Link className="nav-dropdown-item" to="/sell">Sell</Link></li>
-                                <li><Link className="nav-dropdown-item" to="/demolish">Demolish</Link></li>
-                            </ul>
+                </Link>
+
+                {/* 🍔 Custom Hamburger Toggle */}
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    onClick={() => setMenuOpen(prev => !prev)}
+                >
+                    <span className="navbar-toggler-icon">
+                        {menuOpen ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="black" viewBox="0 0 24 24">
+                                <path d="M18 6L6 18M6 6l12 12" stroke="black" strokeWidth="2" strokeLinecap="round" />
+                            </svg>
+                        ) : (
+                            <span className="navbar-toggler-icon" />
                         )}
-                    </li>
-                    <CustomLink to="/about">About</CustomLink>
-                    <CustomLink to="/faqs">FAQs</CustomLink>
-                    <CustomLink to="/contact">Contact</CustomLink>
-                </ul>
-                <div className="d-flex align-items-center">
-                    {isAuthenticated && (
-                        <Link to="/cart" className="cart-icon me-3" style={{ position: "relative" }}>
-                            <FaShoppingCart size={24} color="black" />
-                            {/* Always show the cart badge, even if it's 0 */}
-                            <p className="cart-badge"
-                                style={{
+                    </span>
+                </button>
+
+                <div className={`collapse navbar-collapse ${menuOpen ? 'show' : ''}`} id="navbarNav">
+                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                        <CustomLink to="/" onClick={() => setMenuOpen(false)}>Home</CustomLink>
+
+                        <li className="nav-item dropdown">
+                            <span
+                                className="nav-link dropdown-toggle"
+                                onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}
+                                role="button"
+                            >
+                                Services
+                            </span>
+                            {servicesDropdownOpen && (
+                                <ul className="dropdown-menu show">
+                                    <li><Link className="dropdown-item" to="/buy" onClick={() => setMenuOpen(false)}>Buy</Link></li>
+                                    <li><Link className="dropdown-item" to="/sell" onClick={() => setMenuOpen(false)}>Sell</Link></li>
+                                    <li><Link className="dropdown-item" to="/demolish" onClick={() => setMenuOpen(false)}>Demolish</Link></li>
+                                </ul>
+                            )}
+                        </li>
+
+                        <CustomLink to="/about" onClick={() => setMenuOpen(false)}>About</CustomLink>
+                        <CustomLink to="/faqs" onClick={() => setMenuOpen(false)}>FAQs</CustomLink>
+                        <CustomLink to="/contact" onClick={() => setMenuOpen(false)}>Contact</CustomLink>
+                    </ul>
+
+                    <div className="d-flex align-items-center">
+                        {isAuthenticated && (
+                            <Link to="/cart" className="cart-icon me-3" style={{ position: "relative" }} onClick={() => setMenuOpen(false)}>
+                                <FaShoppingCart size={24} color="black" />
+                                <p className="cart-badge" style={{
                                     position: "absolute",
                                     top: "-5px",
                                     right: "-5px",
-                                    backgroundColor: cartCount > 0 ? "red" : "gray", // Change color if count is 0
+                                    backgroundColor: cartCount > 0 ? "red" : "gray",
                                     color: "white",
                                     borderRadius: "50%",
                                     width: "18px",
@@ -333,50 +339,53 @@ export default function Navbar() {
                                     justifyContent: "center",
                                     fontWeight: "bold",
                                 }}>
-                                {cartCount}
-                            </p>
-                        </Link>
-                    )}
-                    {isAuthenticated ? (
-                        <div className="profile-container" ref={dropdownRef}>
-                            <div className="profile-circle" onClick={() => setDropdownOpen(!dropdownOpen)}>
-                                {userProfileImage !== profilePic ? (
-                                    <img src={userProfileImage} alt="Profile" className="profile-img"/>
-                                ) : (
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" className="bi bi-person-circle profile-icon" viewBox="0 0 16 16">
-                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-                                        <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-                                    </svg>
+                                    {cartCount}
+                                </p>
+                            </Link>
+                        )}
+
+                        {isAuthenticated ? (
+                            <div className="profile-container" ref={dropdownRef}>
+                                <div className="profile-circle" onClick={() => setDropdownOpen(!dropdownOpen)}>
+                                    {userProfileImage !== profilePic ? (
+                                        <img src={userProfileImage} alt="Profile" className="profile-img" />
+                                    ) : (
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                                            className="bi bi-person-circle profile-icon" viewBox="0 0 16 16">
+                                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                            <path fillRule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                                        </svg>
+                                    )}
+                                </div>
+                                {dropdownOpen && (
+                                    <div className="dropdown-menu show">
+                                        <Link className="nav-dropdown-item" to="/profile" onClick={() => setMenuOpen(false)}>Manage Profile</Link>
+                                        <Link className="nav-dropdown-item" to="/purchase" onClick={() => setMenuOpen(false)}>My Purchase</Link>
+                                        <Link className="nav-dropdown-item" to="/" onClick={() => { setMenuOpen(false); handleLogout(); }}>Logout</Link>
+                                    </div>
                                 )}
                             </div>
-                            {dropdownOpen && (
-                                <div className="dropdown-menu show">
-                                    <Link className="nav-dropdown-item" to="/profile">Manage Profile</Link>
-                                    <Link className="nav-dropdown-item" to="/purchase">My Purchase</Link>
-                                    <Link className="nav-dropdown-item" to="/" onClick={handleLogout}>Logout</Link>
+                        ) : (
+                            !hideAuthButtons && (
+                                <div className="auth-buttons">
+                                    <Link to="/login" className="btn btn-outline-primary me-2" onClick={() => setMenuOpen(false)}>Sign In</Link>
+                                    <Link to="/auth" className="btn btn-primary" onClick={() => setMenuOpen(false)}>Sign Up</Link>
                                 </div>
-                            )}
-                        </div>
-                    ) : (
-                        !hideAuthButtons && (
-                            <div className="auth-buttons">
-                                <Link to="/login" className="btn btn-outline-primary me-2">Sign In</Link>
-                                <Link to="/auth" className="btn btn-primary">Sign Up</Link>
-                            </div>
-                        )
-                    )}
+                            )
+                        )}
+                    </div>
                 </div>
             </div>
         </nav>
     );
 }
 
-function CustomLink({ to, children, ...props }) {
+function CustomLink({ to, children, onClick, ...props }) {
     const resolvedPath = useResolvedPath(to);
     const isActive = useMatch({ path: resolvedPath.pathname, end: true });
     return (
         <li className={`nav-item ${isActive ? "active" : ""}`}>
-            <Link to={to} className="nav-link" {...props}>
+            <Link to={to} className="nav-link" onClick={onClick} {...props}>
                 {children}
             </Link>
         </li>
