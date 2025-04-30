@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/kapbato-frontend/static/css/main.899a67bc.css",
+    "main.js": "/kapbato-frontend/static/js/main.c8ada373.js",
+    "static/js/239.fcaddd2b.chunk.js": "/kapbato-frontend/static/js/239.fcaddd2b.chunk.js",
+    "static/js/977.c7cbf7c7.chunk.js": "/kapbato-frontend/static/js/977.c7cbf7c7.chunk.js",
+    "static/js/732.ab4dd3f5.chunk.js": "/kapbato-frontend/static/js/732.ab4dd3f5.chunk.js",
+    "static/media/ninja.mp4": "/kapbato-frontend/static/media/ninja.a7a24cc4c28f07151e4e.mp4",
+    "static/media/clock.jpeg": "/kapbato-frontend/static/media/clock.7546d3e68d216733518d.jpeg",
+    "static/media/antique-collection.avif": "/kapbato-frontend/static/media/antique-collection.4a13e8e10f83ace07cb2.avif",
+    "static/media/login.avif": "/kapbato-frontend/static/media/login.8ffdd6ef5e07cb88fbc7.avif",
+    "static/media/register.avif": "/kapbato-frontend/static/media/register.2283d148afd0d2b4f56a.avif",
+    "static/media/antique2.jpg": "/kapbato-frontend/static/media/antique2.39643b55f60e7331ce68.jpg",
+    "static/media/history.jpg": "/kapbato-frontend/static/media/history.95e119e3f3b2b5c25843.jpg",
+    "static/media/horn.webp": "/kapbato-frontend/static/media/horn.1b26e67649886aff6b0b.webp",
+    "index.html": "/kapbato-frontend/index.html",
+    "main.899a67bc.css.map": "/kapbato-frontend/static/css/main.899a67bc.css.map",
+    "main.c8ada373.js.map": "/kapbato-frontend/static/js/main.c8ada373.js.map",
+    "239.fcaddd2b.chunk.js.map": "/kapbato-frontend/static/js/239.fcaddd2b.chunk.js.map",
+    "732.ab4dd3f5.chunk.js.map": "/kapbato-frontend/static/js/732.ab4dd3f5.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.899a67bc.css",
+    "static/js/main.c8ada373.js"
+  ]
+}
