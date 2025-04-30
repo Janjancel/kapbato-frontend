@@ -58,6 +58,9 @@ function App() {
             path="/admin/*"
             element={isSuperuser ? <Admin /> : <Navigate to="/" replace />}
           />
+
+            {/* Catch-all route to redirect unknown paths to Home */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
 
