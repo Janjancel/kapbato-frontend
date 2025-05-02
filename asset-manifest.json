@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/kapbato-frontend/static/css/main.899a67bc.css",
-    "main.js": "/kapbato-frontend/static/js/main.83df2d1d.js",
+    "main.css": "/kapbato-frontend/static/css/main.61d4b454.css",
+    "main.js": "/kapbato-frontend/static/js/main.a09963b7.js",
     "static/js/239.fcaddd2b.chunk.js": "/kapbato-frontend/static/js/239.fcaddd2b.chunk.js",
     "static/js/977.c7cbf7c7.chunk.js": "/kapbato-frontend/static/js/977.c7cbf7c7.chunk.js",
     "static/js/732.ab4dd3f5.chunk.js": "/kapbato-frontend/static/js/732.ab4dd3f5.chunk.js",
@@ -14,13 +14,13 @@
     "static/media/history.jpg": "/kapbato-frontend/static/media/history.95e119e3f3b2b5c25843.jpg",
     "static/media/horn.webp": "/kapbato-frontend/static/media/horn.1b26e67649886aff6b0b.webp",
     "index.html": "/kapbato-frontend/index.html",
-    "main.899a67bc.css.map": "/kapbato-frontend/static/css/main.899a67bc.css.map",
-    "main.83df2d1d.js.map": "/kapbato-frontend/static/js/main.83df2d1d.js.map",
+    "main.61d4b454.css.map": "/kapbato-frontend/static/css/main.61d4b454.css.map",
+    "main.a09963b7.js.map": "/kapbato-frontend/static/js/main.a09963b7.js.map",
     "239.fcaddd2b.chunk.js.map": "/kapbato-frontend/static/js/239.fcaddd2b.chunk.js.map",
     "732.ab4dd3f5.chunk.js.map": "/kapbato-frontend/static/js/732.ab4dd3f5.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.899a67bc.css",
-    "static/js/main.83df2d1d.js"
+    "static/css/main.61d4b454.css",
+    "static/js/main.a09963b7.js"
   ]
 }
